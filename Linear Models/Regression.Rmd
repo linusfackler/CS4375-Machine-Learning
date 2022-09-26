@@ -1,0 +1,114 @@
+---
+title: "Regression"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+Fernando Colman and Linus Fackler
+CS 4375.003
+Linear Models Project
+
+Linear regression is a method that utilizes x variables (predictors) and y values (targets) such that their relationship can be modeled using the linear equation y = mx * b. The goal of linear regression is to find a line of "best-fit" which can be used to predict future y values given new x values. An advantage of linear regression is that you can also do polynomial linear regression to make models that are not necessarily linear equations. A disadvantage of linear regression is that it's a method with a lot of bias, meaning it wants to find a linear model even if it doesn't really fit the model.  
+
+Dataset Citation: Fanaee-T, Hadi. (2013). Bike Sharing Dataset. UCI Machine Learning Repository.
+
+
+## A. Loading Data and Splitting into Test/Train
+
+```{r}
+bikes <- read.csv("hour.csv", header=TRUE)
+set.seed(1234)
+i <- sample(1:nrow(bikes), .8*nrow(bikes), replace=FALSE)
+train <- bikes[i,]
+test <- bikes[-i,]
+```
+
+## B. Use R Functions for Data Exploration on Training Data
+
+```{r}
+str(train)
+names(train)
+nrow(train)
+ncol(train)
+colSums(is.na(train))
+summary(train)
+
+```
+
+## C. Use Training Data to Build Informative Graphs
+
+```{r}
+plot(train$temp, train$cnt, xlab = "Temperature", ylab = "Number of Bikes Rented")
+plot(train$atemp, train$cnt, xlab = "Temperature Feeling", ylab = "Number of Bikes Rented")
+plot(train$hum, train$cnt, xlab = "Humidity", ylab = "Number of Bikes Rented")
+plot(train$windspeed, train$cnt, xlab = "Windspeed", ylab = "Number of Bikes Rented")
+boxplot(cnt~weekday, data=train, xlab = "Day of The Week", ylab = "Number of Bikes Rented")
+```
+## D. Build a Simple Linear Regression Model using Training Data
+
+```{r}
+lm1 <- lm(cnt~temp, data=train)
+summary(lm1)
+```
+
+We created a linear regression model to see the effect that temperature of a particular day might have on the amount of bikes rented on that day. The model shows that the Residual Standard Error is 167.1 and the R-Squared value is at 0.1577, meaning there is not a lot of correlation between temperature and the amount of bikes rented. Ideally, we would want to see an R-Squared value closer to 1.0 which would indicate a strong correlation between temperature and bikes rented.  
+
+
+## E. Plot the Residuals of the Linear Regression Model  
+
+```{r}
+plot(lm1)
+```
+  
+1. The first plot of "Residuals vs Fitted Value" is supposed to indicate whether the predictors and target potentially have a non-linear relationship. For example, a horizontal line with equally spread residuals means that there's not likely to be a non-linear relationship. However, our graph shows that while there is a fairly horizontal line there is a lot of variety on the spread of the residuals around that line. This likely indicates that while there isn't a non-linear relationship that isn't being displayed in the model, the strength of that linear relationship that is there probably isn't very strong. I would argue that this plot shows that when temperatures are at their extremes then temperature is a great predictor for bikes rented, but when temperatures are in a normal range then the relationship is a lot weaker.  
+2. The second plot of "Normal Q-Q" shows whether residuals are normally distributed as shows by normal line which is dashed and the actual values which are in black. This plot actually backs up my hypothesis from the previous plot. It shows that when temperatures are in a normal range, meaning the middle of the data, then the residuals are normally distributed which is good. However, when the temperatures start reaching their extremes like in the start and end of this plot then the residuals are not so normally distributed and therefore being influenced by other factors.  
+3. The "Scale Location" plot shows if residuals are spread evenly among the ranges of the predictors, which in this case is just temperature. To show that the residuals are in fact spread equally then we would want to see a horizontal line with randomly spread points around it. However, this is not the case for our graph which shows a clear incline and later decline slope with a lot more spread out points in the middle of the data as opposed to the extremes. This plot continues to provide evidence for the hypothesis that I put forth since the first graph that temperature becomes a worst predictor once it enters the really hot or really cold ranges.   
+4. The last plot of "Residuals vs Leverage" is meant to show how impactful specific outliers are to our linear regression model. This graph isn't read by looking at patterns but rather by looking at what are known as "Cook Distances" which are shown in the graph by a red dashed line. If there are any data points which are outside of the Cook's line then it means that not only is that point an outlier but it also having a very large impact on the model. Thankfully, our model doesn't even show the Cook's line because our data points have such low Cook's distances. This is probably due to the sheer amount of observations that the data has but it is also good news since that means that no single outlier is having a large negative influence on our model. 
+
+## F. Build a Multiple Linear Regression Model
+
+```{r}
+lm2 <- lm(cnt~season+yr+mnth+hr+holiday+weekday+workingday+weathersit+temp+atemp+hum+windspeed, data=train)
+summary(lm2)
+plot(lm2)
+```
+## G. Build a Third Linear Regression Model using any Combination of Methods
+
+```{r}
+lm3 <- lm(log(cnt)~season+yr+hr+atemp+hum+windspeed, data=train)
+summary(lm3)
+plot(lm3)
+```
+## H. Compare Results of Models  
+
+  After building the first linear model, I realized that temperature alone was not going to be the best predictor for the number of bikes rented simply because once temperatures reach a normal range then there are a lot of other predictors that have a stronger correlation and therefore predictive value with bikes rented. In my second linear model, I did a multiple linear regression model using all of the other meaningful predictors from the dataset. This alone drastically improved the effectiveness of the model, allowing the r-squared value to reach a value of 0.385. Once I created this model I could see which of the predictors actually had the biggest impact on the coefficient of the line of best fit. This is how I created my third linear model which is both a multiple regression model as well as a logarithmic regression model since it's trying to predict the log of the number of bikes registers. This gave us the highest r-squared value yet of 0.476. The third model is clearly the best one since it uses only the predictors which are of most consequence and also a logarithmic value of the target variable, however it's important to note that the third model wouldn't do great at predicting the values of rented bikes since it's using the squared values of rented bikes instead.  
+
+## I. Predict and Evaluate on Test Data
+
+```{r}
+pred1 <- predict(lm1, newdata=test)
+pred2 <- predict(lm2, newdata=test)
+pred3 <- predict(lm3, newdata=test)
+cor1 <- cor(pred1, test$cnt)
+cor2 <- cor(pred2, test$cnt)
+cor3 <- cor(pred3, test$cnt)
+mse1 <- mean((pred1-test$cnt)^2)
+mse2 <- mean((pred2-test$cnt)^2)
+mse3 <- mean((pred3-test$cnt)^2)
+rmse1 <- sqrt(mse1)
+rmse2 <- sqrt(mse2)
+rmse3 <- sqrt(mse3)
+print(paste('correlation of 1st model:' , cor1))
+print(paste('correlation of 2nd model:' , cor2))
+print(paste('correlation of 3rd model:' , cor3))
+print(paste('mse of 1st model: ' ,mse1))
+print(paste('mse of 2nd model: ' ,mse2))
+print(paste('mse of 3rd model: ' ,mse3))
+print(paste('rmse of 1st model: ' ,rmse1))
+print(paste('rmse of 2nd model: ' ,rmse2))
+print(paste('rmse of 3rd model: ' ,rmse3))
+```
+  
+  Looking at the correlation, mean squared error, and r-mean squared error, it's clear that it is the second model which is the best predictor of the number of rented bikes. It makes sense that the 2nd model and 3rd model are better than the 1st in terms of correlation simply because we used many more predicors to create those models, however, it's important to note that while the 3rd model has a high correlation it also the largest mse and rmse. This discrepancy is likely due to the fact that we used the relationship between the predictors and the log of the target variable as oppossed dot the actual values of the target. In conclusion, the multiple regression model with all of the predictors included was the overall best model of rented bikes, making it clear that when so many significant predictors are available to use then it's better to use them as opposed to sticking to just one predictor like we did for the first linear model.
+
