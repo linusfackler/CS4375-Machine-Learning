@@ -1,0 +1,221 @@
+---
+title: "Classification"
+author: "Linus Fackler"
+output:
+  word_document: default
+  pdf_document: default
+editor_options:
+  chunk_output_type: inline
+---
+
+Fernando Colman and Linus Fackler CS 4375.003 Linear Models Project
+
+
+## How do linear models work for classification and their strengths and weaknesses
+Models for classifications include Logistic Regression, Deep Learning, as well as Naive Bayes.
+Logistic Regression gives the user interpretable results and is extendable to multiclass.
+On the other hand, overfitting can be controlled but still occurs quickly, once there are less observations than predictors.
+Deep Learning can classify other sources of data, such as audio and image data. A weakness, though, is the need for large amounts of data to fully train these algorithms.
+Naive Bayes algorithms are easy to implement and work better with data containing independent features. It requires less training data, compared to other algorithms
+A disadvantage of it is the chance of getting unrealistic estimations, once there is data in a set that isn't available.
+Advantages and disadvantages of Logistic Regression and Naive Bayes is further explained in part g.
+This program will work with both algorithms.
+
+Dataset Citation: FIFA World Cup 2022, International soccer matches and team strengths (1993-2022), https://www.kaggle.com/datasets/brenda89/fifa-world-cup-2022
+
+### Load the data
+
+```{r}
+matches <- read.csv("international_matches.csv", header=TRUE)
+str(matches)
+```
+
+### Data cleaning
+
+This is just to make the column names more readable and easier to type.
+
+```{r}
+names(matches)[names(matches) == "home_team"] <- "home"
+names(matches)[names(matches) == "away_team"] <- "away"
+names(matches)[names(matches) == "home_team_continent"] <- "h_continent"
+names(matches)[names(matches) == "away_team_continent"] <- "a_continent"
+names(matches)[names(matches) == "home_team_fifa_rank"] <- "h_fifa"
+names(matches)[names(matches) == "away_team_fifa_rank"] <- "a_fifa"
+names(matches)[names(matches) == "home_team_total_fifa_points"] <- "h_fifa_points"
+names(matches)[names(matches) == "away_team_total_fifa_points"] <- "a_fifa_points"
+names(matches)[names(matches) == "home_team_score"] <- "h_score"
+names(matches)[names(matches) == "away_team_score"] <- "a_score"
+names(matches)[names(matches) == "home_team_result"] <- "h_result"
+names(matches)[names(matches) == "home_team_goalkeeper_score"] <- "h_keeper_score"
+names(matches)[names(matches) == "away_team_goalkeeper_score"] <- "a_keeper_score"
+names(matches)[names(matches) == "home_team_mean_defense_score"] <- "h_def_score"
+names(matches)[names(matches) == "away_team_mean_defense_score"] <- "a_def_score"
+names(matches)[names(matches) == "home_team_mean_offense_score"] <- "h_off_score"
+names(matches)[names(matches) == "away_team_mean_offense_score"] <- "a_off_score"
+names(matches)[names(matches) == "home_team_mean_midfield_score"] <- "h_midfield_score"
+names(matches)[names(matches) == "away_team_mean_midfield_score"] <- "a_midfield_score"
+str(matches)
+```
+
+Here, we are deleting all rows, where the game result is "draw", as we just care about win or lose
+```{r}
+matches <- matches[!(matches$h_result=="Draw"),]
+```
+
+
+### Handle missing values
+
+This shows us how many NA's there are in each column, so we can prepare our data better before splitting it into train/test
+
+```{r}
+sapply(matches, function(x) sum(is.na(x)==TRUE))
+```
+
+We see that there is over 15000 rows with missing data in certain columns.
+Instead of deleting those, we will replace the NA's with the median.
+
+```{r}
+matches$h_keeper_score[is.na(matches$h_keeper_score)] <- median(matches$h_keeper_score,na.rm=T)
+matches$a_keeper_score[is.na(matches$a_keeper_score)] <- median(matches$a_keeper_score,na.rm=T)
+
+matches$h_def_score[is.na(matches$h_def_score)] <- median(matches$h_def_score,na.rm=T)
+matches$h_off_score[is.na(matches$h_off_score)] <- median(matches$h_off_score,na.rm=T)
+matches$h_midfield_score[is.na(matches$h_midfield_score)] <- median(matches$h_midfield_score,na.rm=T)
+
+matches$a_def_score[is.na(matches$a_def_score)] <- median(matches$a_def_score,na.rm=T)
+matches$a_off_score[is.na(matches$a_off_score)] <- median(matches$a_off_score,na.rm=T)
+matches$a_midfield_score[is.na(matches$a_midfield_score)] <- median(matches$a_midfield_score,na.rm=T)
+
+sapply(matches, function(x) sum(is.na(x)==TRUE))
+```
+
+Let's change "Win" to 2, "Draw" to 1, and "Lose" to 0
+
+
+```{r}
+matches <- matches[,c(2,3, 6, 7, 8, 9, 10, 11, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25)]
+matches$home <- factor(matches$home)
+matches$away <- factor(matches$away)
+matches$h_result <- factor(matches$h_result)
+matches$neutral_location <- factor(matches$neutral_location)
+matches$shoot_out <- factor(matches$shoot_out)
+matches$h_fifa_points <- factor(matches$h_fifa_points)
+
+str(matches)
+```
+
+
+## a. Divide into 80/20 train/test
+
+```{r}
+set.seed(1234)
+i <- sample(1:nrow(matches), 0.8*nrow(matches), replace=FALSE)
+train <- matches[i,]
+test <- matches[-i,]
+```
+
+## b. Use at least 5 R functions for data exploration, using the training data
+
+```{r}
+summary(train)
+```
+
+```{r}
+names(train)
+```
+
+```{r}
+head(train)
+```
+
+```{r}
+tail(train)
+```
+
+```{r}
+nrow(train)
+```
+
+```{r}
+ncol(train)
+```
+
+This gives us a better insight of what data we're dealing with
+
+## c. Create at least 2 informative graphs, using the training data
+
+```{r}
+plot(train$h_result, train$h_score, xlab = "Home team game result", ylab = "Home Team Score")
+```
+
+```{r}
+plot(train$h_result, train$h_fifa, xlab = "Home Team Result", ylab = "Home Team Fifa Rank")
+```
+```{r}
+plot(train$h_off_score, train$h_score, xlab = "Home team offense score", ylab = "Home team num of goals")
+```
+
+## d. Build a logistic regression model
+```{r}
+glm1 <- glm(h_fifa_points~h_result, data=train, family="binomial")
+summary(glm1)
+```
+In this logistic regression model, we can see how the number of Fifa points of the home team affects the result of the game.
+A one unit increase in the predictor variable h_result is associated with an average change of -0.02746 in the log odds of the response variable h_fifa_points taking on a value of 1. That means, a "win" in h_results tends to be associated with a higher value in h_fifa_points, which represents the strength of a given team, based on the stats in the video game "Fifa".
+Since there is a very high value in degrees of freedom of either Null and Residual deviance, the model poorly fits the dataset.
+
+## e. Build a naïve Bayes model
+
+```{r}
+library(naivebayes)
+model <- naive_bayes(h_result~., data=train, usekernel = T)
+plot(model)
+```
+Here we can see that the attribute "neutral_location" barely has any influence on the outcome of the game. The home game loses slightly more when they played in a neutral location, other than that, there is not much correlation.
+
+## f. Using these two classification models models, predict and evaluate on the test data
+
+```{r}
+probs <- predict(glm1, newdata=test, type="response")
+pred <- ifelse(probs>0.5, 1, 0)
+acc <- mean(pred==test$h_result)
+print(paste("accuracy = ", acc))
+```
+```{r}
+table(pred, test$h_result)
+```
+```{r}
+probs2 <- predict(model, newdata=test, type="class")
+pred2 <- ifelse(probs2>0.5, 1, 0)
+acc2 <- mean(pred2==test$h_result)
+print(paste("accuracy = ", acc2))
+```
+```{r}
+table(pred2, test$h_result)
+```
+I could not get an actual result out of the naive bayes model, which is why I am unable to compare the 2 models.
+
+## g. Strengths and Weaknesses of Naïve Bayes and Logistic Regression
+
+### Naïve Bayes
++ It works better with data containing independent features, compared to other models, and therefore requires less training data.
++ Another strength is that it works better with categorical input variables than numeric variables.
+- It is less applicable for real world problems, as it assumes that all predictors are independent, which is very unlikely in real world data
+- If data in the test set wasn't available in the training data set, it assigns zero probability to it, which can completely mess up your data and give unrealistic estimations
+
+### Logistic Regression
++ Compared to other models, it is quite easy to implement and trains efficiently
++ It classifies unknown data faster than other models
++ It is extendable to multiple classes
+- Overfitting occurs quickly, if there are less observations than predictors
+- It assumes a linearity between dependent and independent variables
+
+## h. Benefits & drawbacks of each of the classification metrics used
+### Accuracy
+It measures how often the classifier correctly predicts. It is easy to understand and gives the user a basic idea of the effectiveness of the model.
+It can be very misleading though when used on unbalanced data, as it will show high effectiveness if just wild guesses could give the same "accuracy". Since it is just a single value, it is not as interpretable as a Confusion Matrix.
+
+### Confusion Matrix
+It is a matrix showing correctly classified instances, as well as errors.
+You can see what types of errors were made by the model. This is an advantage over Accuracy, as this does not show incorrect predictions.
+Confusions Matrices are not made for Multiclass and cannot give class probabilities.
