@@ -1,0 +1,963 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Regression},
+  pdfauthor={Linus Fackler, Justin Hardy, Fernando Colman, Isabelle Villegas},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Regression}
+\author{Linus Fackler, Justin Hardy, Fernando Colman, Isabelle Villegas}
+\date{}
+
+\begin{document}
+\maketitle
+
+This data set contains information of over 10000 different plane rides
+in India in 2019, containing the price, duration, number of stops, and
+other information. The set can be found here:
+\url{https://www.kaggle.com/datasets/ibrahimelsayed182/plane-ticket-price}
+
+\hypertarget{load-the-data}{%
+\subsubsection{Load the data}\label{load-the-data}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"planetickets.csv"}\NormalTok{, }\AttributeTok{header =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{str}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    10683 obs. of  11 variables:
+##  $ Airline        : chr  "IndiGo" "Air India" "Jet Airways" "IndiGo" ...
+##  $ Date_of_Journey: chr  "24/03/2019" "1/05/2019" "9/06/2019" "12/05/2019" ...
+##  $ Source         : chr  "Banglore" "Kolkata" "Delhi" "Kolkata" ...
+##  $ Destination    : chr  "New Delhi" "Banglore" "Cochin" "Banglore" ...
+##  $ Route          : chr  "BLR ? DEL" "CCU ? IXR ? BBI ? BLR" "DEL ? LKO ? BOM ? COK" "CCU ? NAG ? BLR" ...
+##  $ Dep_Time       : chr  "22:20" "05:50" "09:25" "18:05" ...
+##  $ Arrival_Time   : chr  "01:10 22 Mar" "13:15" "04:25 10 Jun" "23:30" ...
+##  $ Duration       : chr  "2h 50m" "7h 25m" "19h" "5h 25m" ...
+##  $ Total_Stops    : chr  "non-stop" "2 stops" "2 stops" "1 stop" ...
+##  $ Additional_Info: chr  "No info" "No info" "No info" "No info" ...
+##  $ Price          : int  3897 7662 13882 6218 13302 3873 11087 22270 11087 8625 ...
+\end{verbatim}
+
+\hypertarget{data-cleaning}{%
+\subsubsection{Data cleaning}\label{data-cleaning}}
+
+First, we have to clean the data, since a lot of columns contain strings
+instead of integers or floats.
+
+We throw out some of the columns that don't provide any useful
+information, such as ``additional info''.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ df[,}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{11}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+We check how many NA rows there are.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sapply}\NormalTok{(df, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{sum}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(x)}\SpecialCharTok{==}\ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     Airline      Source Destination    Dep_Time    Duration Total_Stops 
+##           0           0           0           0           0           0 
+##       Price 
+##           0
+\end{verbatim}
+
+This data set contains no rows with missing values, so we don't have to
+make any changes.
+
+Now, we check how many unique values the column Total\_Stops has, before
+we change it from a String to an Integer.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{length}\NormalTok{(}\FunctionTok{unique}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{Total\_Stops))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{unique}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{Total\_Stops)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "non-stop" "2 stops"  "1 stop"   "3 stops"  ""         "4 stops"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{Total\_Stops }\SpecialCharTok{==} \StringTok{""}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+We see that it has 6 unique values, one of them is just the empty
+string. There is only 1 row with this empty value, so we delete this
+row.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ df[}\SpecialCharTok{!}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{Total\_Stops }\SpecialCharTok{==} \StringTok{""}\NormalTok{),]}
+\FunctionTok{unique}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{Total\_Stops)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "non-stop" "2 stops"  "1 stop"   "3 stops"  "4 stops"
+\end{verbatim}
+
+We change these to usable integer values and then change the type of the
+column to numeric.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df}\SpecialCharTok{$}\NormalTok{Total\_Stops[df}\SpecialCharTok{$}\NormalTok{Total\_Stops }\SpecialCharTok{==} \StringTok{"non{-}stop"}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{df}\SpecialCharTok{$}\NormalTok{Total\_Stops[df}\SpecialCharTok{$}\NormalTok{Total\_Stops }\SpecialCharTok{==} \StringTok{"1 stop"}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{df}\SpecialCharTok{$}\NormalTok{Total\_Stops[df}\SpecialCharTok{$}\NormalTok{Total\_Stops }\SpecialCharTok{==} \StringTok{"2 stops"}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{2}
+\NormalTok{df}\SpecialCharTok{$}\NormalTok{Total\_Stops[df}\SpecialCharTok{$}\NormalTok{Total\_Stops }\SpecialCharTok{==} \StringTok{"3 stops"}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{3}
+\NormalTok{df}\SpecialCharTok{$}\NormalTok{Total\_Stops[df}\SpecialCharTok{$}\NormalTok{Total\_Stops }\SpecialCharTok{==} \StringTok{"4 stops"}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{4}
+
+\FunctionTok{unique}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{Total\_Stops)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "0" "2" "1" "3" "4"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{transform}\NormalTok{(df, }\AttributeTok{Total\_Stops =} \FunctionTok{as.integer}\NormalTok{(Total\_Stops))}
+\FunctionTok{str}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    10682 obs. of  7 variables:
+##  $ Airline    : chr  "IndiGo" "Air India" "Jet Airways" "IndiGo" ...
+##  $ Source     : chr  "Banglore" "Kolkata" "Delhi" "Kolkata" ...
+##  $ Destination: chr  "New Delhi" "Banglore" "Cochin" "Banglore" ...
+##  $ Dep_Time   : chr  "22:20" "05:50" "09:25" "18:05" ...
+##  $ Duration   : chr  "2h 50m" "7h 25m" "19h" "5h 25m" ...
+##  $ Total_Stops: int  0 2 2 1 1 0 1 1 1 1 ...
+##  $ Price      : int  3897 7662 13882 6218 13302 3873 11087 22270 11087 8625 ...
+\end{verbatim}
+
+Now, for the column ``Duration'', we will cut off everything after the
+`h', so we only keep the hours of the flight.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df}\SpecialCharTok{$}\NormalTok{Duration }\OtherTok{\textless{}{-}} \FunctionTok{gsub}\NormalTok{(}\StringTok{"h.*"}\NormalTok{,}\StringTok{""}\NormalTok{, df}\SpecialCharTok{$}\NormalTok{Duration)}
+\NormalTok{df}\SpecialCharTok{$}\NormalTok{Duration[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "2"  "7"  "19" "5"  "4"  "2"  "15" "21" "25" "7"
+\end{verbatim}
+
+Then, we change the type also to numeric.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{transform}\NormalTok{(df, }\AttributeTok{Duration =} \FunctionTok{as.integer}\NormalTok{(Duration))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in eval(substitute(list(...)), `_data`, parent.frame()): NAs introduced
+## by coercion
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    10682 obs. of  7 variables:
+##  $ Airline    : chr  "IndiGo" "Air India" "Jet Airways" "IndiGo" ...
+##  $ Source     : chr  "Banglore" "Kolkata" "Delhi" "Kolkata" ...
+##  $ Destination: chr  "New Delhi" "Banglore" "Cochin" "Banglore" ...
+##  $ Dep_Time   : chr  "22:20" "05:50" "09:25" "18:05" ...
+##  $ Duration   : int  2 7 19 5 4 2 15 21 25 7 ...
+##  $ Total_Stops: int  0 2 2 1 1 0 1 1 1 1 ...
+##  $ Price      : int  3897 7662 13882 6218 13302 3873 11087 22270 11087 8625 ...
+\end{verbatim}
+
+Upon checking, there is somehow an NA value in our column Duration now.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sapply}\NormalTok{(df, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{sum}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(x)}\SpecialCharTok{==}\ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     Airline      Source Destination    Dep_Time    Duration Total_Stops 
+##           0           0           0           0           1           0 
+##       Price 
+##           0
+\end{verbatim}
+
+We will simply delete this row, as 1 row does not matter.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ df[}\SpecialCharTok{!}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{Duration)),]}
+\FunctionTok{sapply}\NormalTok{(df, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{sum}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(x)}\SpecialCharTok{==}\ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     Airline      Source Destination    Dep_Time    Duration Total_Stops 
+##           0           0           0           0           0           0 
+##       Price 
+##           0
+\end{verbatim}
+
+We're done with duration now.
+
+We do the same for the departure time. We will cut off the minutes and
+just keep the hours.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df}\SpecialCharTok{$}\NormalTok{Dep\_Time }\OtherTok{\textless{}{-}} \FunctionTok{gsub}\NormalTok{(}\StringTok{":.*"}\NormalTok{,}\StringTok{""}\NormalTok{, df}\SpecialCharTok{$}\NormalTok{Dep\_Time)}
+\NormalTok{df}\SpecialCharTok{$}\NormalTok{Dep\_Time[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "22" "05" "09" "18" "16" "09" "18" "08" "08" "11"
+\end{verbatim}
+
+Now, we will transform it to an integer value.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{transform}\NormalTok{(df, }\AttributeTok{Dep\_Time =} \FunctionTok{as.integer}\NormalTok{(Dep\_Time))}
+\FunctionTok{str}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    10681 obs. of  7 variables:
+##  $ Airline    : chr  "IndiGo" "Air India" "Jet Airways" "IndiGo" ...
+##  $ Source     : chr  "Banglore" "Kolkata" "Delhi" "Kolkata" ...
+##  $ Destination: chr  "New Delhi" "Banglore" "Cochin" "Banglore" ...
+##  $ Dep_Time   : int  22 5 9 18 16 9 18 8 8 11 ...
+##  $ Duration   : int  2 7 19 5 4 2 15 21 25 7 ...
+##  $ Total_Stops: int  0 2 2 1 1 0 1 1 1 1 ...
+##  $ Price      : int  3897 7662 13882 6218 13302 3873 11087 22270 11087 8625 ...
+\end{verbatim}
+
+\hypertarget{train-and-test-sets}{%
+\subsubsection{Train and Test sets}\label{train-and-test-sets}}
+
+Divide into train and test sets
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
+\NormalTok{i }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(df), }\FunctionTok{round}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(df)}\SpecialCharTok{*}\FloatTok{0.8}\NormalTok{), }\AttributeTok{replace=}\ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ df[i, }\SpecialCharTok{{-}}\DecValTok{9}\NormalTok{]}
+\NormalTok{test }\OtherTok{\textless{}{-}}\NormalTok{ df[}\SpecialCharTok{{-}}\NormalTok{i, }\SpecialCharTok{{-}}\DecValTok{9}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{data-exploration-of-training-data}{%
+\subsubsection{Data Exploration of Training
+Data}\label{data-exploration-of-training-data}}
+
+First, we look at how flight durations and ticket prices look together
+in a plot.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(train}\SpecialCharTok{$}\NormalTok{Duration}\SpecialCharTok{\textasciitilde{}}\NormalTok{train}\SpecialCharTok{$}\NormalTok{Price, }\AttributeTok{xlab=}\StringTok{"Ticket Price"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"Flight Duration"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\FunctionTok{lm}\NormalTok{(train}\SpecialCharTok{$}\NormalTok{Duration}\SpecialCharTok{\textasciitilde{}}\NormalTok{train}\SpecialCharTok{$}\NormalTok{Price), }\AttributeTok{col=}\StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Regression_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+This shows us the general trend of longer flights resulting in higher
+ticket prices.
+
+Now, we will see how
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}}\NormalTok{ train}\SpecialCharTok{$}\NormalTok{Price[(train}\SpecialCharTok{$}\NormalTok{Price }\SpecialCharTok{\textless{}} \DecValTok{15000}\NormalTok{) }\SpecialCharTok{\&}\NormalTok{ (train}\SpecialCharTok{$}\NormalTok{Total\_Stops }\SpecialCharTok{==} \DecValTok{0}\NormalTok{)]}
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ train}\SpecialCharTok{$}\NormalTok{Duration[(train}\SpecialCharTok{$}\NormalTok{Duration }\SpecialCharTok{\textless{}} \DecValTok{20}\NormalTok{) }\SpecialCharTok{\&}\NormalTok{ (train}\SpecialCharTok{$}\NormalTok{Total\_Stops }\SpecialCharTok{==} \DecValTok{0}\NormalTok{)]}
+\FunctionTok{plot}\NormalTok{(y[}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{min}\NormalTok{(}\FunctionTok{length}\NormalTok{(x),}\FunctionTok{length}\NormalTok{(y))]}\SpecialCharTok{\textasciitilde{}}\NormalTok{x[}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{min}\NormalTok{(}\FunctionTok{length}\NormalTok{(x),}\FunctionTok{length}\NormalTok{(y))], }\AttributeTok{xlab=}\StringTok{"Ticket Price"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"Flight Duration"}\NormalTok{, }\AttributeTok{main=}\StringTok{"Flights with 0 stops"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Regression_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{counts }\OtherTok{\textless{}{-}} \FunctionTok{table}\NormalTok{(train}\SpecialCharTok{$}\NormalTok{Total\_Stops)}
+\FunctionTok{barplot}\NormalTok{(counts)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Regression_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+We see that there is no data where the number of stops is 4 in the
+training portion of the data, which is why we will leave it out in the
+next plot.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{colors }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"\#2EFF00"}\NormalTok{, }\CommentTok{\#green for 0 stops}
+            \StringTok{"\#FF0000"}\NormalTok{, }\CommentTok{\#red for 1 stop}
+            \StringTok{"\#FFFB00"}\NormalTok{, }\CommentTok{\#yellow for 2 stops}
+            \StringTok{"\#000CFF"} \CommentTok{\#blue for 3 stops}
+\NormalTok{            )}
+
+\NormalTok{groups }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(train}\SpecialCharTok{$}\NormalTok{Total\_Stops)}
+\FunctionTok{plot}\NormalTok{(train}\SpecialCharTok{$}\NormalTok{Duration}\SpecialCharTok{\textasciitilde{}}\NormalTok{train}\SpecialCharTok{$}\NormalTok{Price, }\AttributeTok{xlab=}\StringTok{"Ticket Price"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"Flight Duration"}\NormalTok{, }\AttributeTok{pch =} \DecValTok{19}\NormalTok{, }\AttributeTok{col=}\NormalTok{colors[groups])}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\AttributeTok{legend=}\FunctionTok{c}\NormalTok{(}\StringTok{"0 stops"}\NormalTok{, }\StringTok{"1 stop"}\NormalTok{, }\StringTok{"2 stops"}\NormalTok{, }\StringTok{"3 stops"}\NormalTok{), }\AttributeTok{pch =} \DecValTok{19}\NormalTok{, }\AttributeTok{col =}\NormalTok{ colors[}\FunctionTok{factor}\NormalTok{(}\FunctionTok{levels}\NormalTok{(groups))])}
+\FunctionTok{abline}\NormalTok{(}\FunctionTok{lm}\NormalTok{(train}\SpecialCharTok{$}\NormalTok{Duration}\SpecialCharTok{\textasciitilde{}}\NormalTok{train}\SpecialCharTok{$}\NormalTok{Price), }\AttributeTok{col=}\StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Regression_files/figure-latex/unnamed-chunk-17-1.pdf}
+
+This tells us that most short flights have 0 stops and are less than
+\$10000. It also tells us that the number of stops doesn't necessarily
+affect the price, rather just the duration.
+
+\hypertarget{linear-regression}{%
+\subsection{Linear Regression}\label{linear-regression}}
+
+\hypertarget{model-for-predictors-duration-total_stops}{%
+\subsubsection{Model for predictors Duration +
+Total\_Stops}\label{model-for-predictors-duration-total_stops}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Price }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Duration }\SpecialCharTok{+}\NormalTok{ Total\_Stops, }\AttributeTok{data=}\NormalTok{train)}
+\FunctionTok{summary}\NormalTok{(lm1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Price ~ Duration + Total_Stops, data = train)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+##  -9556  -2133   -784   1554  53073 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 5507.860     63.563   86.65   <2e-16 ***
+## Duration      77.081      6.771   11.38   <2e-16 ***
+## Total_Stops 3383.876     85.180   39.73   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 3574 on 8542 degrees of freedom
+## Multiple R-squared:  0.3822, Adjusted R-squared:  0.382 
+## F-statistic:  2642 on 2 and 8542 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+In this Linear Regression model we see the effect that the duration of
+the flight and number of stops have on the ticket price. Our R-squared
+value is around 0.38, which indicates that the duration and number of
+stops are not the best predictors for this model. They don't have as big
+of an effect on the ticket price as I thought. This can be because there
+are other factors that affect the flight, like the airline, since some
+are more luxurious and therefore more expensive, or the amount of days
+the ticket was purchased prior to the flight. If tickets are bought a
+couple of days before the flight, they are most likely more expensive
+than tickets that were purchased ahead in time. The fact that the
+p-value is less than 0.5 shows that this model is statistically
+significant.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(lm1)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Regression_files/figure-latex/unnamed-chunk-19-1.pdf}
+\includegraphics{Regression_files/figure-latex/unnamed-chunk-19-2.pdf}
+\includegraphics{Regression_files/figure-latex/unnamed-chunk-19-3.pdf}
+\includegraphics{Regression_files/figure-latex/unnamed-chunk-19-4.pdf}
+
+Residuals vs Fitted: This represents the difference between the actual
+price of the plane ticket and our models prediction. Our model suggests
+some form of heteroscedasticity, meaning the variability of our
+predictions are not equally variable throughout. Some values are closer
+to the 0 line than others. Most values are following a linear
+relationship though. So there is a clear relationship between the
+predictors and the predicted value.
+
+Normal Q-Q: Most data is in between -2 and 2 standard deviations, just
+like in a normal distributions. There is a bunch of extremes on the
+right side, which means it is very hard to predict what the price is
+going to be based off this model.
+
+Scale-Location: This plot shows if the residuals are spread equally
+among our predictions in order to check homoscedasticity. Since there
+are clear trends in the plot, there is no equal variance in our
+residuals.
+
+Residuals vs Leverage: This plot helps us find influential data points.
+We don't have any data points that have large leverage and also high
+residuals, meaning, there are few data points that have a big impact on
+the coefficients and the intercept of the model. So, we don't have any
+data points that we should remove necessarily.
+
+\hypertarget{evaluate-on-the-test-set-for-predictors-duration-and-total_stops}{%
+\subsubsection{Evaluate on the test set for predictors Duration and
+Total\_Stops}\label{evaluate-on-the-test-set-for-predictors-duration-and-total_stops}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pred1 }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(lm1, }\AttributeTok{newdata =}\NormalTok{ test)}
+\NormalTok{cor1 }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(pred1, test}\SpecialCharTok{$}\NormalTok{Price)}
+\NormalTok{mse1 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((pred1 }\SpecialCharTok{{-}}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{Price) }\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{rmse1 }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(mse1)}
+
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"correlation:"}\NormalTok{, cor1))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "correlation: 0.584158942107584"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"mse:"}\NormalTok{, mse1))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "mse: 15580681.0188734"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"rmse:"}\NormalTok{, rmse1))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "rmse: 3947.23713740046"
+\end{verbatim}
+
+\hypertarget{model-with-all-predictors}{%
+\subsubsection{Model with all
+predictors}\label{model-with-all-predictors}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lma }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Price }\SpecialCharTok{\textasciitilde{}}\NormalTok{., }\AttributeTok{data =}\NormalTok{ train)}
+\FunctionTok{summary}\NormalTok{(lma)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Price ~ ., data = train)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+##  -7932  -1407   -366   1157  40849 
+## 
+## Coefficients: (4 not defined because of singularities)
+##                                           Estimate Std. Error t value Pr(>|t|)
+## (Intercept)                               6671.299    225.572  29.575  < 2e-16
+## AirlineAir India                          1728.730    206.412   8.375  < 2e-16
+## AirlineGoAir                                31.473    292.967   0.107  0.91445
+## AirlineIndiGo                              327.285    197.325   1.659  0.09723
+## AirlineJet Airways                        4316.456    194.800  22.158  < 2e-16
+## AirlineJet Airways Business              44491.881   1303.749  34.126  < 2e-16
+## AirlineMultiple carriers                  3727.769    212.660  17.529  < 2e-16
+## AirlineMultiple carriers Premium economy  4405.548    853.178   5.164 2.48e-07
+## AirlineSpiceJet                           -305.207    217.159  -1.405  0.15992
+## AirlineTrujet                            -1400.622   2888.854  -0.485  0.62780
+## AirlineVistara                            2245.938    237.025   9.476  < 2e-16
+## AirlineVistara Premium economy            4067.229   1673.804   2.430  0.01512
+## SourceChennai                            -2508.810    205.218 -12.225  < 2e-16
+## SourceDelhi                              -2532.786    124.337 -20.370  < 2e-16
+## SourceKolkata                            -2483.059    122.905 -20.203  < 2e-16
+## SourceMumbai                             -4037.828    167.056 -24.171  < 2e-16
+## DestinationCochin                               NA         NA      NA       NA
+## DestinationDelhi                         -3475.103    147.747 -23.521  < 2e-16
+## DestinationHyderabad                            NA         NA      NA       NA
+## DestinationKolkata                              NA         NA      NA       NA
+## DestinationNew Delhi                            NA         NA      NA       NA
+## Dep_Time                                    17.510      5.555   3.152  0.00163
+## Duration                                     9.995      5.908   1.692  0.09070
+## Total_Stops                               2649.529     82.742  32.022  < 2e-16
+##                                             
+## (Intercept)                              ***
+## AirlineAir India                         ***
+## AirlineGoAir                                
+## AirlineIndiGo                            .  
+## AirlineJet Airways                       ***
+## AirlineJet Airways Business              ***
+## AirlineMultiple carriers                 ***
+## AirlineMultiple carriers Premium economy ***
+## AirlineSpiceJet                             
+## AirlineTrujet                               
+## AirlineVistara                           ***
+## AirlineVistara Premium economy           *  
+## SourceChennai                            ***
+## SourceDelhi                              ***
+## SourceKolkata                            ***
+## SourceMumbai                             ***
+## DestinationCochin                           
+## DestinationDelhi                         ***
+## DestinationHyderabad                        
+## DestinationKolkata                          
+## DestinationNew Delhi                        
+## Dep_Time                                 ** 
+## Duration                                 .  
+## Total_Stops                              ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2879 on 8525 degrees of freedom
+## Multiple R-squared:  0.5998, Adjusted R-squared:  0.5989 
+## F-statistic: 672.4 on 19 and 8525 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+Compared to our model with just Duration and Total\_Stops as predictors,
+this model shows a higher R-squared value, indicating that there are
+more factors that influence the price of the plane ticket. As predicted
+above, the airline carrier makes a difference, since some tend to me
+more expensive.
+
+\hypertarget{evaluate-model-with-all-predictors}{%
+\subsubsection{Evaluate model with all
+predictors}\label{evaluate-model-with-all-predictors}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{preda }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(lma, }\AttributeTok{newdata =}\NormalTok{ test)}
+\NormalTok{cora }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(preda, test}\SpecialCharTok{$}\NormalTok{Price)}
+\NormalTok{msea }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((preda }\SpecialCharTok{{-}}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{Price) }\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"cor="}\NormalTok{, cora))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "cor= 0.76968523775651"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"mse="}\NormalTok{, msea))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "mse= 9698939.7919547"
+\end{verbatim}
+
+We see pretty decent results. Let's see how they compare to kNN.
+
+\hypertarget{knn-for-regression}{%
+\subsection{kNN for regression}\label{knn-for-regression}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(caret)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: ggplot2
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: lattice
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# fit the model}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{knnreg}\NormalTok{(train[,}\DecValTok{4}\SpecialCharTok{:}\DecValTok{6}\NormalTok{],train[,}\DecValTok{7}\NormalTok{],}\AttributeTok{k=}\DecValTok{3}\NormalTok{)}
+
+\CommentTok{\# evaluate}
+\NormalTok{pred2 }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(fit, test[,}\DecValTok{4}\SpecialCharTok{:}\DecValTok{6}\NormalTok{])}
+\NormalTok{cor\_knn1 }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(pred2, test}\SpecialCharTok{$}\NormalTok{Price)}
+\NormalTok{mse\_knn1 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((pred2 }\SpecialCharTok{{-}}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{Price) }\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"cor="}\NormalTok{, cor\_knn1))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "cor= 0.679339454132071"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"mse="}\NormalTok{, mse\_knn1))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "mse= 12759958.583699"
+\end{verbatim}
+
+As we can see, the results for kNN weren't quite as good as the results
+for the Linear Regression model. (Cor for LinReg: \textasciitilde0.77,
+kNN: \textasciitilde0.68) A reason for this difference might be that we
+didn't scale the data for kNN, which works better on scaled data.
+
+\hypertarget{scale-the-data-for-knn}{%
+\subsubsection{Scale the data for kNN}\label{scale-the-data-for-knn}}
+
+We are scaling both train and test data on the means and standard
+deviations of the training set. This is so that information about the
+test data does not leak into the scaling.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train\_scaled }\OtherTok{\textless{}{-}}\NormalTok{ train[}\DecValTok{4}\SpecialCharTok{:}\DecValTok{6}\NormalTok{]}
+\NormalTok{means }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(train\_scaled, mean)}
+\NormalTok{stdvs }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(train\_scaled, sd)}
+\NormalTok{train\_scaled }\OtherTok{\textless{}{-}} \FunctionTok{scale}\NormalTok{(train\_scaled, }\AttributeTok{center=}\NormalTok{means, }\AttributeTok{scale=}\NormalTok{stdvs)}
+\NormalTok{test\_scaled }\OtherTok{\textless{}{-}} \FunctionTok{scale}\NormalTok{(test[, }\DecValTok{4}\SpecialCharTok{:}\DecValTok{6}\NormalTok{], }\AttributeTok{center=}\NormalTok{means, }\AttributeTok{scale=}\NormalTok{stdvs)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{knn-on-scaled-data}{%
+\subsubsection{kNN on scaled data}\label{knn-on-scaled-data}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{knnreg}\NormalTok{(train\_scaled, train}\SpecialCharTok{$}\NormalTok{Price, }\AttributeTok{k=}\DecValTok{3}\NormalTok{)}
+\NormalTok{pred3 }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(fit, test\_scaled)}
+\NormalTok{cor\_knn2 }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(pred3, test}\SpecialCharTok{$}\NormalTok{Price)}
+\NormalTok{mse\_knn2 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((pred3 }\SpecialCharTok{{-}}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{Price) }\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"cor="}\NormalTok{, cor\_knn2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "cor= 0.680064162657665"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"mse="}\NormalTok{, mse\_knn2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "mse= 12739665.9924593"
+\end{verbatim}
+
+The kNN now has a \emph{slightly} higher cor and lower mse than before
+scaling, but still not higher than the Linear Regression. This might
+just be because we can only use 3 predictor values, because the other
+columns contain characters and not numeric values. Compared to the first
+Linear Regression model we made, though, using only Duration and
+Total\_Stops as predictors, we have a high increase in Correlation and
+decrease in mse. (Cor for first lm model: 0.58, for kNN: 0.68)
+
+\hypertarget{find-the-best-k}{%
+\subsubsection{Find the best k}\label{find-the-best-k}}
+
+We will try various values of k and plot the results.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cor\_k }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{)}
+\NormalTok{mse\_k }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{)}
+\NormalTok{i }\OtherTok{\textless{}{-}} \DecValTok{1}
+\ControlFlowTok{for}\NormalTok{ (k }\ControlFlowTok{in} \FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{39}\NormalTok{, }\DecValTok{2}\NormalTok{)) \{}
+\NormalTok{  fit\_k }\OtherTok{\textless{}{-}} \FunctionTok{knnreg}\NormalTok{(train\_scaled, train}\SpecialCharTok{$}\NormalTok{Price, }\AttributeTok{k=}\NormalTok{k)}
+\NormalTok{  pred\_k }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(fit\_k, test\_scaled)}
+\NormalTok{  cor\_k[i] }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(pred\_k, test}\SpecialCharTok{$}\NormalTok{Price)}
+\NormalTok{  mse\_k[i] }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((pred\_k }\SpecialCharTok{{-}}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{Price)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+  \FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"k="}\NormalTok{, k, cor\_k[i], mse\_k[i]))}
+\NormalTok{  i }\OtherTok{\textless{}{-}}\NormalTok{ i }\SpecialCharTok{+} \DecValTok{1}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "k= 1 0.679532385149251 12775379.3365894"
+## [1] "k= 3 0.680064162657665 12739665.9924593"
+## [1] "k= 5 0.684164787758733 12582162.1263527"
+## [1] "k= 7 0.683470613982923 12602502.1739109"
+## [1] "k= 9 0.680956410633889 12683507.5976628"
+## [1] "k= 11 0.671786051022922 12976684.7561946"
+## [1] "k= 13 0.667703952965126 13105256.5607836"
+## [1] "k= 15 0.670920631314766 13003740.4050598"
+## [1] "k= 17 0.67083363096341 13008086.8167307"
+## [1] "k= 19 0.668188392789619 13093213.7791912"
+## [1] "k= 21 0.66732212881467 13120877.4467431"
+## [1] "k= 23 0.666704476200499 13140518.5321617"
+## [1] "k= 25 0.664163641127559 13219073.0067556"
+## [1] "k= 27 0.662103413313666 13282726.2014171"
+## [1] "k= 29 0.661556475971501 13301342.8765166"
+## [1] "k= 31 0.662513906760468 13273991.243621"
+## [1] "k= 33 0.661163394757784 13318670.9156331"
+## [1] "k= 35 0.661938828399245 13296059.8344066"
+## [1] "k= 37 0.661897464064353 13299176.0080797"
+## [1] "k= 39 0.654935199111982 13508553.9760139"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{20}\NormalTok{, cor\_k, }\AttributeTok{lwd=}\DecValTok{2}\NormalTok{, }\AttributeTok{col=}\StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{, }\AttributeTok{ylab=}\StringTok{""}\NormalTok{, }\AttributeTok{yaxt=}\StringTok{\textquotesingle{}n\textquotesingle{}}\NormalTok{)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{new=}\ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{20}\NormalTok{, mse\_k, }\AttributeTok{lwd=}\DecValTok{2}\NormalTok{, }\AttributeTok{col=}\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\AttributeTok{labels=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{ylab=}\StringTok{""}\NormalTok{, }\AttributeTok{yaxt=}\StringTok{\textquotesingle{}n\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in plot.window(...): "labels" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.xy(xy, type, ...): "labels" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in box(...): "labels" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): "labels" is not a graphical parameter
+\end{verbatim}
+
+\includegraphics{Regression_files/figure-latex/unnamed-chunk-32-1.pdf}
+
+As we can see, the best value for k is at k = 5 (in this plot it is at
+3, but that is because there is k=5 is at index 3 in lists cor\_k and
+mse\_k)
+
+We can also check with min and max:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{which.min}\NormalTok{(mse\_k)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{which.max}\NormalTok{(cor\_k)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+Since we have used k=3 (which was just a coincidence) in the above kNN
+regression already, we have our best data for this regression.
+
+\hypertarget{decision-tree-for-regression}{%
+\subsection{Decision Tree for
+regression}\label{decision-tree-for-regression}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tree)}
+\FunctionTok{library}\NormalTok{(MASS)}
+\NormalTok{tree1 }\OtherTok{\textless{}{-}} \FunctionTok{tree}\NormalTok{(Price }\SpecialCharTok{\textasciitilde{}}\NormalTok{., }\AttributeTok{data=}\NormalTok{train)}
+\FunctionTok{summary}\NormalTok{(tree1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Regression tree:
+## tree(formula = Price ~ ., data = train)
+## Variables actually used in tree construction:
+## [1] "Duration"    "Total_Stops"
+## Number of terminal nodes:  3 
+## Residual mean deviance:  11910000 = 1.017e+11 / 8542 
+## Distribution of residuals:
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -8104.0 -1996.0  -393.2     0.0  1783.0 52040.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pred4 }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(tree1, }\AttributeTok{newdata=}\NormalTok{test)}
+\NormalTok{cor\_tree }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(pred4, test}\SpecialCharTok{$}\NormalTok{Price)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"cor:"}\NormalTok{, cor\_tree))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "cor: 0.63007524717813"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mse\_tree }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((pred4 }\SpecialCharTok{{-}}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{Price) }\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"mse:"}\NormalTok{, mse\_tree))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "mse: 14271349.8899186"
+\end{verbatim}
+
+So far, the correlation and mse are worse than for either kNN or Linear
+Regression.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(tree1)}
+\FunctionTok{text}\NormalTok{(tree1, }\AttributeTok{cex =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{pretty =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Regression_files/figure-latex/unnamed-chunk-38-1.pdf}
+
+\hypertarget{concusion}{%
+\subsection{Concusion}\label{concusion}}
+
+Comparing all the results, kNN and Linear Regression performed the best.
+In the dataset there are only 3 predictors that are numeric values,
+which made it hard to fairly compare all 3 models. The Linear Regression
+model got the best results by using all predictors. The kNN got the best
+results considering it could only use 3 predictors. And even then, it
+was only slightly worse than the Linear Regression model using all
+predictors. The Decision tree performed slightly worse than the kNN, as
+it was also only using 2 predictors. For this dataset specifically, the
+Linear Regression was the most powerful model. I think these results
+strongly differ with different types of data sets.
+
+\end{document}
