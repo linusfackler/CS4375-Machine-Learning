@@ -1,0 +1,407 @@
+---
+title: "SVM Classification"
+author: "Linus Fackler, Fernando Colman"
+output:
+  word_document: default
+  html_notebook: default
+---
+
+### Load the data & library
+
+This data set was already split into test and train.
+The data represents the number of times a marketing person contacted a client about a product (bank term deposit) subscription.
+It can be found here: https://www.kaggle.com/datasets/dev523/ml-marathon-dataset-by-azure-developer-community
+
+```{r}
+library(e1071)
+train <- read.csv("data.csv", header = TRUE)
+test <- read.csv("test_data.csv", header = TRUE)
+str(train)
+str(test)
+```
+
+### Data Cleaning
+
+```{r}
+sapply(df, function(x) sum(is.na(x)==TRUE))
+sapply(df, function(x) sum(is.na(x)==TRUE))
+```
+
+No NA's in either data set.
+
+
+Factorizing all chr data types in train:
+
+```{r}
+train$job <- factor(train$job)
+train$marital <- factor(train$marital)
+train$education <- factor(train$education)
+train$default <- factor(train$default)
+train$housing <- factor(train$housing)
+train$loan <- factor(train$loan)
+train$contact <- factor(train$contact)
+train$poutcome <- factor(train$poutcome)
+train$deposit <- factor(train$deposit)
+
+str(train)
+```
+
+For month, we want it to be factorized in order, so we will change it to integer values representing each month.
+
+```{r}
+unique(train$month)
+
+train$month[train$month == "jan"] <- "1"
+train$month[train$month == "feb"] <- "2"
+train$month[train$month == "mar"] <- "3"
+train$month[train$month == "apr"] <- "4"
+train$month[train$month == "may"] <- "5"
+train$month[train$month == "jun"] <- "6"
+train$month[train$month == "jul"] <- "7"
+train$month[train$month == "aug"] <- "8"
+train$month[train$month == "sep"] <- "9"
+train$month[train$month == "oct"] <- "10"
+train$month[train$month == "nov"] <- "11"
+train$month[train$month == "dec"] <- "12"
+head(train$month, 40)
+```
+
+Now, changing it to integers.
+
+```{r}
+train <- transform(train, month = as.integer(month))
+str(train)
+```
+
+
+Factorizing all chr data types in test:
+
+```{r}
+test$job <- factor(test$job)
+test$marital <- factor(test$marital)
+test$education <- factor(test$education)
+test$default <- factor(test$default)
+test$housing <- factor(test$housing)
+test$loan <- factor(test$loan)
+test$contact <- factor(test$contact)
+test$poutcome <- factor(test$poutcome)
+
+str(test)
+```
+
+Same thing with months to integers as in train:
+
+```{r}
+unique(test$month)
+
+test$month[test$month == "jan"] <- "1"
+test$month[test$month == "feb"] <- "2"
+test$month[test$month == "mar"] <- "3"
+test$month[test$month == "apr"] <- "4"
+test$month[test$month == "may"] <- "5"
+test$month[test$month == "jun"] <- "6"
+test$month[test$month == "jul"] <- "7"
+test$month[test$month == "aug"] <- "8"
+test$month[test$month == "sep"] <- "9"
+test$month[test$month == "oct"] <- "10"
+test$month[test$month == "nov"] <- "11"
+test$month[test$month == "dec"] <- "12"
+head(train$month, 40)
+```
+
+Now, changing it to integers.
+
+```{r}
+test <- transform(test, month = as.integer(month))
+str(test)
+```
+
+Other than that, the data looks pretty clean.
+The reason why the data was already split was, that there is no "deposit" values in the test data, since this is our target value.
+
+ 
+### Data Exploration of Training Data
+ 
+First, we will explore the training data statistically and graphically
+ 
+```{r}
+print(paste("Number of Rows: ", nrow(train)))
+```
+```{r}
+print(paste("Average Age: ", mean(train$age)))
+print(paste("Median Age: ", median(train$age)))
+```
+ 
+```{r}
+print(paste("Average Day: ", mean(train$day)))
+print(paste("Median Day: ", median(train$day)))
+```
+
+```{r}
+print(paste("Average Balance: ", mean(train$balance)))
+print(paste("Median Balance: ", median(train$balance)))
+```
+
+```{r}
+print(paste("Average Duration: ", mean(train$duration)))
+print(paste("Median Duration: ", median(train$duration)))
+```
+
+
+### Plots
+
+In the following section I will show the affects of different factors on the deposit value.
+
+#### Deposit and no deposit
+
+Now, we will use a barplot to see how many yes and no's Deposit has, which is our target values.
+ 
+```{r}
+counts <- table(train$deposit)
+barplot(counts, ylab = "Count", xlab = "Deposit", main="Deposit", col = c(4, 2))
+pie(counts, main="Deposit", col = c(4, 2))
+```
+
+#### Day and Deposit
+
+```{r}
+counts_yes <- table(train$day[train$deposit=="yes"])
+counts_no <- table(train$day[train$deposit=="no"])
+barplot(counts_yes, ylab = "Frequency", main="Deposit = yes", col = 2)
+barplot(counts_no, ylab = "Frequency", main="Deposit = no", col = 4)
+```
+
+
+#### Month and Deposit
+
+How many yes and no per month were made.
+
+```{r}
+counts_yes <- table(train$month[train$deposit=="yes"])
+counts_no <- table(train$month[train$deposit=="no"])
+barplot(counts_yes, ylab = "Frequency", main="Deposit = yes", col = 2)
+barplot(counts_no, ylab = "Frequency", main="Deposit = no", col = 4)
+```
+
+#### Deposits per month
+
+This pie chart shows us how many deposits per month are made percentage-wise.
+
+```{r}
+counts_month <- table(train$month)
+pie(counts_month, main="Frequency per month", col = c(2,3,4,5,6,7,10,11,12,13,14,15))
+```
+#### Day and Month
+ 
+```{r}
+counts_1 <- table(train$day[train$month == 1])
+barplot(counts_1, ylab = "Frequency", main = "Januar", col = 2)
+
+counts_2 <- table(train$day[train$month == 2])
+barplot(counts_2, ylab = "Frequency", main = "February", col = 3)
+
+counts_3 <- table(train$day[train$month == 3])
+barplot(counts_3, ylab = "Frequency", main = "March", col = 4)
+
+counts_4 <- table(train$day[train$month == 4])
+barplot(counts_4, ylab = "Frequency", main = "April", col = 5)
+
+counts_5 <- table(train$day[train$month == 5])
+barplot(counts_5, ylab = "Frequency", main = "May", col = 6)
+
+counts_6 <- table(train$day[train$month == 6])
+barplot(counts_6, ylab = "Frequency", main = "June", col = 7)
+
+counts_7 <- table(train$day[train$month == 7])
+barplot(counts_7, ylab = "Frequency", main = "July", col = 10)
+
+counts_8 <- table(train$day[train$month == 8])
+barplot(counts_8, ylab = "Frequency", main = "August", col = 11)
+
+counts_9 <- table(train$day[train$month == 9])
+barplot(counts_9, ylab = "Frequency", main = "September", col = 12)
+
+counts_10 <- table(train$day[train$month == 10])
+barplot(counts_10, ylab = "Frequency", main = "October", col = 13)
+
+counts_11 <- table(train$day[train$month == 11])
+barplot(counts_11, ylab = "Frequency", main = "November", col = 14)
+
+counts_12 <- table(train$day[train$month == 12])
+barplot(counts_12, ylab = "Frequency", main = "December", col = 15)
+```
+
+#### Age and Deposits
+
+This shows us the number of deposits made according to customers age.
+
+```{r}
+counts_yes <- table(train$age[train$deposit=="yes"])
+counts_no <- table(train$age[train$deposit=="no"])
+barplot(counts_yes, ylab = "Frequency", xlab = "Age", main="Deposit = yes", col = 2)
+barplot(counts_no, ylab = "Frequency", xlab = "Age", main="Deposit = no", col = 4)
+```
+
+#### Balance and Deposit
+
+Number of deposits compared to the balance of the customer.
+
+```{r}
+counts_yes <- table(train$balance[train$deposit=="yes"])
+counts_no <- table(train$balance[train$deposit=="no"])
+barplot(counts_yes, ylab = "Frequency", xlab = "Balance", main="Deposit = yes", border = 2)
+barplot(counts_no, ylab = "Frequency", xlab = "Balance", main="Deposit = no", border = 4)
+```
+
+#### Marital Status and Deposits
+
+```{r}
+counts_yes <- table(train$marital[train$deposit == "yes"])
+counts_no <- table(train$marital[train$deposit == "no"])
+barplot(counts_yes, ylab = "Frequency", main="Deposit = yes", col = 2)
+barplot(counts_no, ylab = "Frequency", main="Deposit = no", col = 4)
+```
+
+#### Education Status and Deposits
+
+```{r}
+counts_yes <- table(train$education[train$deposit == "yes"])
+counts_no <- table(train$education[train$deposit == "no"])
+barplot(counts_yes, ylab = "Frequency", main="Deposit = yes", col = 2)
+barplot(counts_no, ylab = "Frequency", main="Deposit = no", col = 4)
+```
+
+#### Default and Deposits
+
+```{r}
+counts_yes <- table(train$default[train$deposit == "yes"])
+counts_no <- table(train$default[train$deposit == "no"])
+barplot(counts_yes, ylab = "Frequency", main="Deposit = yes", col = 2)
+barplot(counts_no, ylab = "Frequency", main="Deposit = no", col = 4)
+```
+
+#### Job and Deposits
+
+```{r}
+counts_yes <- table(train$job[train$deposit == "yes"])
+counts_no <- table(train$job[train$deposit == "no"])
+barplot(counts_yes, ylab = "Frequency", main="Deposit = yes", col = 2)
+barplot(counts_no, ylab = "Frequency", main="Deposit = no", col = 4)
+```
+
+
+## Linear SVM
+ 
+I will first split our data sets into smaller ones, since my computer cannot run/takes too long for the current number of observations.
+
+```{r}
+trainsmall <- head(train, 3000)
+testsmall <- tail(train, 600)
+valdsmall <- train[3001:3601,]
+```
+
+
+```{r}
+svm1 <- svm(deposit~., data=trainsmall, kernel="linear", cost=10, scale=TRUE)
+summary(svm1)
+```
+ 
+### Evaluate
+ 
+```{r}
+pred <- predict(svm1, newdata=testsmall)
+table(pred, testsmall$deposit)
+```
+ 
+```{r}
+mean(pred==testsmall$deposit)
+```
+This algorithm shows a 80.5% accuracy.
+
+
+### Tune
+
+```{r}
+tune_svm1 <- tune(svm, deposit~. , data=valdsmall, kernel="linear", ranges=list(cost=c(0.001, 0.01, 0.1, 1, 5, 10, 100)))
+summary(tune_svm1)
+```
+
+### Evaluate on best linear SVM
+
+```{r}
+pred <- predict(tune_svm1$best.model, newdata=testsmall)
+table(pred, testsmall$deposit)
+```
+```{r}
+mean(pred==testsmall$deposit)
+```
+
+Already 2% better.
+
+
+## Polynomial SVM
+
+```{r}
+svm2 <- svm(deposit~., data=trainsmall, kernel="polynomial", cost=10, scale=TRUE)
+summary(svm2)
+```
+
+### Evaluate
+ 
+```{r}
+pred <- predict(svm2, newdata=testsmall)
+table(pred, testsmall$deposit)
+```
+ 
+```{r}
+mean(pred==testsmall$deposit)
+```
+
+### Tune
+
+```{r}
+tune_svm2 <- tune(svm, deposit~. , data=valdsmall, kernel="polynomial", ranges=list(cost=c(0.001, 0.01, 0.1, 1, 5, 10, 100)))
+summary(tune_svm2)
+```
+
+We were already using the best model for polynomial SVM.
+Cost: 10
+
+### Radial SVM
+
+```{r}
+svm3 <- svm(deposit~., data=trainsmall, kernel="radial", cost=10, scale=TRUE)
+summary(svm3)
+```
+
+```{r}
+pred <- predict(svm3, newdata=testsmall)
+table(pred, testsmall$deposit)
+```
+ 
+```{r}
+mean(pred==testsmall$deposit)
+```
+
+Slightly worse than the best polynomial.
+Now, let's see if it improves after tuning hyperparameters.
+
+### Tune hyperparameters
+
+```{r}
+set.seed(1234)
+tune.out <- tune(svm, deposit~., data=valdsmall, kernel="radial", ranges=list(cost=c(0.1,1,10,100,1000), gamma=c(0.5,1,2,3,4)))
+summary(tune.out)
+```
+
+As we can see, we already used the best cost for our radial SVM model.
+
+
+## Analysis
+
+The linear SVM with the best hyperparameters showed an accuracy of 82.5%.
+Polynomial is second with 81.5%, and radial third with 80.7%.
+
+The linear kernel works best in this dataset, because as we can see in the many many plots I have generated in the evaluation section, the data is linearly separable. There is not many outliers, making the use of radial or polynomial kernels useless, as no improvement will happen, if the line becomes a polynomial graph. The data is very linear already, which is why we get the best results using the linear kernel.
+
+Therefore, the linear kernel works best in this dataset.
