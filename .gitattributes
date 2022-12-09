@@ -2,3 +2,4 @@
 *.cls linguist-vendored
 *.Rmd linguist-language=R
 *.ipynb linguist-detectable=false
+*.html linguist-detectable=false
